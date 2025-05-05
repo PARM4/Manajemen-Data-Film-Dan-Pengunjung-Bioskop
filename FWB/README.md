@@ -1,7 +1,7 @@
 # <p align="center" style="margin-top: 0;">MANAJEMEN DATA FILMS DAN PENGUNJUNG BIOSKOP</p>
 
 <p align="center">
-  <img src="logo_Unsulbar.png" width="300" alt="Deskripsi gambar" />
+  <img src="logo_unsulbar.png" width="300" alt="Deskripsi gambar" />
 </p>
 
 ### <p align="center">PARMA</p>
