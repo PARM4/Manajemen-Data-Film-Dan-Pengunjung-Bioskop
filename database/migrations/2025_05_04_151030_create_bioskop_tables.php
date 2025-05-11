@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('durasi');
             $table->timestamps();
         });
-
         Schema::create('pengunjungs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
@@ -26,7 +25,7 @@ return new class extends Migration
         });
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_film'); 
+            $table->unsignedBigInteger('id_film');
             $table->string('ruangan');
             $table->date('show_date');
             $table->time('show_time');
@@ -36,8 +35,8 @@ return new class extends Migration
         Schema::create('tikets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pengunjung');
-            $table->unsignedBigInteger('id_jadwal'); 
-            $table->decimal('harga',8,2);
+            $table->unsignedBigInteger('id_jadwal');
+            $table->decimal('harga', 8, 2);
             $table->foreign('id_pengunjung')->references('id')->on('pengunjungs')->onDelete('cascade');
             $table->foreign('id_jadwal')->references('id')->on('jadwals')->onDelete('cascade');
             $table->timestamps();
