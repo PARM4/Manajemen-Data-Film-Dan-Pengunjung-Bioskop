@@ -25,20 +25,11 @@
                         @foreach ($tiket as $item)
                         <tr>
                             <td>{{ $item->id }}</td>
-                            {{-- <td>{{ $item->jadwal->film->title ?? 'tidak ada'}}</td> --}}
                             <td>
-                                {{-- Cek apakah relasi jadwal ada --}}
-                                @if ($item->jadwal)
-                                    Jadwal OK —
-                                    {{-- Cek apakah relasi film ada --}}
-                                    @if ($item->jadwal->film)
-                                        Film: {{ $item->jadwal->film->title }}
-                                    @else
-                                        Film NULL
-                                    @endif
-                                @else
-                                    Jadwal NULL
+                                @if ($item->jadwals && $item->jadwals->films)
+                                    {{$item->jadwals->films->title}}
                                 @endif
+                                
                             </td>
                             <td>Rp {{ $item->harga}}</td>
                             <td class="text-end">

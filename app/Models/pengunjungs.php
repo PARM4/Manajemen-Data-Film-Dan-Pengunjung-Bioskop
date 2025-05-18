@@ -9,5 +9,7 @@ class pengunjungs extends Model
 {
     /** @use HasFactory<\Database\Factories\PengunjungsFactory> */
     use HasFactory;
-    protected $fillable = ['nama', 'created_at', 'updated_at'];
+    protected $table = 'pengunjungs';
+    protected $fillable = ['nama','email','password', 'created_at', 'updated_at'];
+    protected $hidden =['password'];
 }

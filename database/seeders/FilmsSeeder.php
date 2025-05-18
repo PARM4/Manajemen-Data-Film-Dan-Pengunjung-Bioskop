@@ -13,9 +13,9 @@ class FilmsSeeder extends Seeder
      */
     public function run(): void
     {
-        // films::factory()->count(1)->create();
+        // films::factory()->count(5)->create();
         DB::table('films')->insert([
-            ['title'=>'Train To Busan', 'genre'=>'Horor', 'durasi'=>'120','created_at'=>now(), 'updated_at'=>now()]
+            ['title' => 'Train To Busan', 'genre' => 'Horor', 'durasi' => '120', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

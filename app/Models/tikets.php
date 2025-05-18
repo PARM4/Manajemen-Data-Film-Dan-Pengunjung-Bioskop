@@ -16,11 +16,11 @@ class tikets extends Model
     }
 
     public function jadwals(){
-        return $this->belongsTo(jadwals::class,);
+        return $this->belongsTo(jadwals::class,'id_jadwal');
     }
 
     public function films(){
-        return $this->hasMany(jadwals::class, 'id_jadwal');
+        return $this->hasMany(jadwals::class, 'id_film');
     }
 
 }

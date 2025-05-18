@@ -13,9 +13,14 @@ class JadwalsSeeder extends Seeder
      */
     public function run(): void
     {
-        // jadwals::factory()->count(1)->create();
+        // jadwals::factory()->count(5)->create();
         DB::table('jadwals')->insert([
-            'id_film'=>1, 'ruangan'=>'A4', 'show_date'=>'2025-05-08', 'show_time'=>'13:30', 'created_at'=>now(), 'updated_at'=>now()
+            'id_film' => 1,
+            'ruangan' => 'A4',
+            'show_date' => '2025-05-08',
+            'show_time' => '13:30',
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }

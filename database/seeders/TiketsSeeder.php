@@ -15,9 +15,9 @@ class TiketsSeeder extends Seeder
      */
     public function run(): void
     {
-        // tikets::factory()->count(1)->create();
+        // tikets::factory()->count(5)->create();
         DB::table('tikets')->insert([
-            ['id_pengunjung'=> pengunjungs::first()->id, 'id_jadwal' => jadwals::first()->id, 'harga' => 35000.00, 'created_at' => now(), 'updated_at' => now()]
+            ['id_pengunjung' => pengunjungs::first()->id, 'id_jadwal' => jadwals::first()->id, 'harga' => 35000.00, 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 }

@@ -19,41 +19,40 @@
                             <th>Judul Film</th>
                             <th>Genre</th>
                             <th>Durasi</th>
-                            <th></th>
+                            @if (Auth::user()->role === 'admin')
+                                <th></th>   
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($film as $item)
+                        @foreach ($film as $index => $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $item->title }}</td>
                             <td>{{ $item->genre}}</td>
                             <td>{{ $item->durasi }}</td>
+                            @if (Auth::user()->role === 'admin')
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
-                                    <form action="{{ route('tambahfilm', $item->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm mr-2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('hapusfilm', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash-alt"></i> Hapus
-                                        </button>
-                                    </form>
+                                    @include('components.crudbutton',
+                                    ['edit'=>route('editfilm',$item ->id),
+                                    'delete'=>route('hapusfilm',$item->id)]
+                                    )
                                 </div>
-                            </td>    
+                            </td>   
+                            @else 
+                            
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <a href="{{route('tambahfilm')}}">
-                <button type="submit" class="btn btn-primary">Tambah</button>
-            </a>
+            @if (Auth::user()->role === 'admin')
+                <a href="{{route('tambahfilm')}}">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </a>
+            @endif
         </div>
     </div>
 

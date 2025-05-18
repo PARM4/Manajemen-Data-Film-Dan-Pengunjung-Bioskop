@@ -21,6 +21,8 @@ return new class extends Migration
         Schema::create('pengunjungs', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
         Schema::create('jadwals', function (Blueprint $table) {
@@ -41,6 +43,10 @@ return new class extends Migration
             $table->foreign('id_jadwal')->references('id')->on('jadwals')->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->enum('role', ['admin', 'staf', 'pengunjung'])->default('pengunjung')->after('password');
+        });
     }
 
     /**
@@ -48,9 +54,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filems');
+        Schema::dropIfExists('films');
         Schema::dropIfExists('pengunjungs');
         Schema::dropIfExists('jadwals');
         Schema::dropIfExists('tikets');
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropColumn('role');
+        // });
     }
 };

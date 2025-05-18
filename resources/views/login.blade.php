@@ -19,11 +19,23 @@
             <div class="card o-hidden border-0 shadow-lg my-5">
                 <div class="card-body p-5">
 
-                    <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Silakan Login</h1>
+                    <div class="text-center mb-4">
+                        <h1 class="h4 text-gray-900">Silakan Login</h1>
                     </div>
 
-                    <form method="POST" action="{{route('masuk')}}" method="POST">
+                    {{-- Pesan error di dalam card, tanpa tombol close --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Terjadi kesalahan:</strong>
+                            <ul class="mb-0 mt-2 pl-3">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form action="login" method="POST">
                         @csrf
 
                         <div class="form-group">

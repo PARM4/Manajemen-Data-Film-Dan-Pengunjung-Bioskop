@@ -13,6 +13,6 @@ class jadwals extends Model
 
     //relasi
     public function films(){
-        return $this->belongsTo(films::class);
+        return $this->belongsTo(films::class, 'id_film');
     }
 }

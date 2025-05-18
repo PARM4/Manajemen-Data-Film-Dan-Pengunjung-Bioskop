@@ -1,17 +1,26 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-    <div class="sidebar-brand d-flex align-items-center justify-content-center px-3">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none" id="toggleSidebarAction">
+    <div class="sidebar-brand d-flex align-items-center justify-content-center px-3 mt-3">
+        <a href="#" class="d-flex flex-column align-items-center text-white text-decoration-none" id="toggleSidebarAction">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
+            {{-- @if (Auth::user()->role === 'admin')
+            <div>
+                <span>ADMIN</span>
+            </div>
+            @else
+            <span>STAF</span>
+            @endif --}}
+            <p>{{ Auth::user()->role }}</p>
+
             <div class="sidebar-brand-text mx-2">@yield('user')</div>
         </a>
     </div>
 
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" href="{{url('/dashboard')}}">
+        <a class="nav-link" href="{{route('dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
