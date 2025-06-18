@@ -16,47 +16,42 @@
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>
-                            <th>Film</th>
+                            <th>Nama Pengunjung</th>
+                            <th>Jadwal</th>
                             <th>Harga</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($tiket as $item)
+                        @foreach ($tiket as $index => $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>
-                                @if ($item->jadwals && $item->jadwals->films)
-                                    {{$item->jadwals->films->title}}
-                                @endif
-                                
-                            </td>
-                            <td>Rp {{ $item->harga}}</td>
+                            <td>{{ $index + 1 }}</td>
+                            {{-- <td>{{ $item->id_pengunjung}}</td>
+                            <td>{{ $item->id_jadwal}}</td> --}}
+                            <td>{{ $item->pengunjung->nama ?? 'Tidak ditemukan' }}</td>
+                            <td>{{ $item->jadwal->show_date ?? 'Tidak ditemukan' }}</td>
+                            <td>{{ $item->harga}}</td>
+                            @if (Auth::user()->role === 'admin')
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
-                                    <form action="{{ route('tambahtiket', $item->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm mr-2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('hapustiket', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash-alt"></i> Hapus
-                                        </button>
-                                    </form>
+                                    @include('components.crudbutton',
+                                    ['edit'=>route('tiket.edit',$item ->id),
+                                    'delete'=>route('tiket.destroy',$item->id)]
+                                    )
                                 </div>
-                            </td>    
+                            </td>   
+                            
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <a href="{{route('tambahtiket')}}">
-                <button type="submit" class="btn btn-primary">Tambah</button>
-            </a>
+            @if (Auth::user()->role === 'admin')
+                <a href="{{route('tiket.create')}}">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </a>
+            @endif
         </div>
     </div>
 

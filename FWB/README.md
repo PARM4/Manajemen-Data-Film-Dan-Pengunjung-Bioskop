@@ -69,6 +69,18 @@
 | created_at | TIMESTAMP | Waktu dibuat |
 | updatet_at | TIMESTAMP | Waktu diubah |
 
+### 4. Tabel ```{user}```
+| Field | Tipe Data | Keterangan |
+| ----------- | ----------- | ----------- |
+| id | INT(PK) | ID User |
+| nama | VARCHAR | Nama |
+| email | VARCHAR | Email User |
+| email_verified_at | VARCHAR |  |
+| password | VARCHAR | Password User|
+| role | ENUM | [admin,satf] |
+| created_at | TIMESTAMP | Waktu dibuat |
+| updatet_at | TIMESTAMP | Waktu diubah |
+
 ---
 
 ## Relasi Antar Tabel
@@ -86,6 +98,11 @@
 - **Relasi**: One to Many
 - **Penjelasan**: Satu jadwal bisa memiliki banyak tiket.
 - **Kunci Relasi**: ```{jadwals.id}``` ←→ ```{tikets.id_jadwal}```
+
+### 3. pengunjungs ↔ user
+- **Relasi**: One to one
+- **Penjelasan**: Satu pengunjung hanya bisa memiliki satu user.
+- **Kunci Relasi**: ```{pengunjung.id}``` ←→ ```{user.user_id}```
 
 
 

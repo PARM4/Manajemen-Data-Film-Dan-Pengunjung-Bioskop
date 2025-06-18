@@ -35,12 +35,11 @@
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
                                     @include('components.crudbutton',
-                                    ['edit'=>route('editfilm',$item ->id),
-                                    'delete'=>route('hapusfilm',$item->id)]
+                                    ['edit'=>route('film.edit',$item ->id),
+                                    'delete'=>route('film.destroy',$item->id)]
                                     )
                                 </div>
                             </td>   
-                            @else 
                             
                             @endif
                         </tr>
@@ -49,7 +48,7 @@
                 </table>
             </div>
             @if (Auth::user()->role === 'admin')
-                <a href="{{route('tambahfilm')}}">
+                <a href="{{route('film.create')}}">
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </a>
             @endif

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\pengunjungs;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,28 +20,63 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            
-            if($user->role === 'admin | sataf'){
+
+            if ($user->role === 'admin' || $user->role === 'staf') {
                 return redirect()->route('dashboard');
             }
-            // elseif($user->role ==='staf'){
-            //     return redirect()->route('dashboard');
-            // }
+            elseif($user->role ==='pengunjung'){
+                return redirect()->route('film.index');
+            }
             return redirect()->intended('dashboard');
 
         } 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'email atau password salah',
         ])->onlyInput('email');
+    }
+    public function fromregister()
+    {
+        return view('register');
+    }
+    public function register(Request $request)
+    {
+        if (User::where('email', $request->email)->exists()) {
+            return back()->with('error', 'Email sudah digunakan.');
+        }
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role'=>$request->role
+        ]);
+
+        // Jika role-nya pengunjung, tambahkan ke tabel pengunjungs
+        if ($user->role == 'pengunjung') {
+            pengunjungs::create([
+                'user_id' => $user->id,
+                'nama' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+
+
+            ]);
+        }
+
+        return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
     }
 
     public function Logout(Request $request){
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('login');
     }
 

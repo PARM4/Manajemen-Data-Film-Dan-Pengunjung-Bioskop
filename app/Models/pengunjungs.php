@@ -10,6 +10,11 @@ class pengunjungs extends Model
     /** @use HasFactory<\Database\Factories\PengunjungsFactory> */
     use HasFactory;
     protected $table = 'pengunjungs';
-    protected $fillable = ['nama','email','password', 'created_at', 'updated_at'];
+    protected $fillable = ['user_id','nama','email','password', 'created_at', 'updated_at'];
     protected $hidden =['password'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

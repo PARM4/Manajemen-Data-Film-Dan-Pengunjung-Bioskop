@@ -20,10 +20,13 @@ return new class extends Migration
         });
         Schema::create('pengunjungs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
@@ -45,7 +48,7 @@ return new class extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['admin', 'staf', 'pengunjung'])->default('pengunjung')->after('password');
+            $table->enum('role', ['admin', 'staf', 'pengunjung'])->after('password');
         });
     }
 
@@ -58,8 +61,5 @@ return new class extends Migration
         Schema::dropIfExists('pengunjungs');
         Schema::dropIfExists('jadwals');
         Schema::dropIfExists('tikets');
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->dropColumn('role');
-        // });
     }
 };

@@ -16,42 +16,38 @@
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>
-                            <th>Nama Pengunjung</th>
-                            <th>Terdaftar</th>
+                            <th>Nama</th>
+                            <th>Email</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pengunjung as $item)
+                        @foreach ($pengunjung as $index => $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->nama}}</td>
+                            <td>{{ $item->email}}</td>
+                            @if (Auth::user()->role === 'admin')
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
-                                    <form action="{{ route('tambahpengunjung', $item->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-sm mr-2">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </button>
-                                    </form>
-                                    <form action="{{ route('hapuspengunjung', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash-alt"></i> Hapus
-                                        </button>
-                                    </form>
+                                    @include('components.crudbutton',
+                                    ['edit'=>route('pengunjung.edit',$item ->id),
+                                    'delete'=>route('pengunjung.destroy',$item->id)]
+                                    )
                                 </div>
-                            </td>
+                            </td>   
+                            
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-            <a href="{{route('tambahpengunjung')}}">
-                <button type="submit" class="btn btn-primary">Tambah</button>
-            </a>
+            @if (Auth::user()->role === 'admin')
+                <a href="{{route('pengunjung.create')}}">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </a>
+            @endif
         </div>
     </div>
 

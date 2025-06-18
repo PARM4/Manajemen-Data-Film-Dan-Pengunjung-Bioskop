@@ -7,20 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class tikets extends Model
 {
-    /** @use HasFactory<\Database\Factories\TiketsFactory> */
     use HasFactory;
-    protected $fillable = ['id_pengunjung','id_jadwal','harga', 'created_at', 'updated_at'];
 
-    public function pengunjungs(){
+    protected $fillable = ['id_pengunjung', 'id_jadwal', 'harga', 'created_at', 'updated_at'];
+
+    public function pengunjung()
+    {
         return $this->belongsTo(pengunjungs::class, 'id_pengunjung');
     }
 
-    public function jadwals(){
-        return $this->belongsTo(jadwals::class,'id_jadwal');
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal');
     }
-
-    public function films(){
-        return $this->hasMany(jadwals::class, 'id_film');
-    }
-
 }

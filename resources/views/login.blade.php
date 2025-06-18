@@ -52,7 +52,11 @@
                             Masuk
                         </button>
                     </form>
-
+                    <div class="text-center mt-3">
+                        <a href="{{ route('register') }}" class="text-primary font-weight-bold">
+                            Buat Akun Baru
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

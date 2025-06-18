@@ -1,7 +1,7 @@
 @extends('master')
 
-@section('title', 'Jadwal')
-@section('judul', 'Jadwal')
+@section('titName')
+@section('judName')
 
 @section('content')
 <div class="container-fluid">
@@ -16,31 +16,32 @@
                     <thead class="thead-light">
                         <tr>
                             <th>ID</th>
-                            <th>Film</th>
-                            <th>Ruangan</th>
-                            <th>Tanggal Tayang</th>
-                            <th>Waktu Tayang</th>
-                            <th></th>
+                            <th>Nama</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                            @if (Auth::user()->role === 'admin')
+                                <th></th>   
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwal as $item)
+                        @foreach ($user as $index => $item)
                         <tr>
-                            <td>{{  $loop->iteration}}</td>
-                            <td>{{ $item->film->title }}</td>
-                            <td>{{ $item->ruangan}}</td>
-                            <td>{{ $item->show_date}}</td>
-                            <td>{{ $item->show_time}}</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->email}}</td>
+                            <td>{{ $item->password}}</td>
+                            <td>{{ $item->role}}</td>
                             @if (Auth::user()->role === 'admin')
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
                                     @include('components.crudbutton',
-                                    ['edit'=>route('jadwal.edit',$item ->id),
-                                    'delete'=>route('jadwal.destroy',$item->id)]
+                                    ['edit'=>route('user.edit',$item ->id),
+                                    'delete'=>route('user.destroy',$item->id)]
                                     )
                                 </div>
-                            </td>   
-                            
+                            </td>
                             @endif
                         </tr>
                         @endforeach
@@ -48,12 +49,11 @@
                 </table>
             </div>
             @if (Auth::user()->role === 'admin')
-                <a href="{{route('jadwal.create')}}">
+                <a href="{{route('user.create')}}">
                     <button type="submit" class="btn btn-primary">Tambah</button>
                 </a>
             @endif
         </div>
     </div>
-
 </div>
 @endsection

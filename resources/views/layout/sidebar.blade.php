@@ -5,26 +5,24 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            {{-- @if (Auth::user()->role === 'admin')
-            <div>
+            @if (Auth::user()->role === 'admin')
                 <span>ADMIN</span>
-            </div>
+            @elseif (Auth::user()->role === 'staf')
+                <span>STAF</span>
             @else
-            <span>STAF</span>
-            @endif --}}
-            <p>{{ Auth::user()->role }}</p>
-
-            <div class="sidebar-brand-text mx-2">@yield('user')</div>
+                <span>PENGUNJUNG</span>
+            @endif
         </a>
     </div>
 
-    <hr class="sidebar-divider my-0">
-    <li class="nav-item active">
-        <a class="nav-link" href="{{route('dashboard')}}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
+    @if (Auth::user()->role === 'admin' || Auth::user()->role === 'staf')
+        <li class="nav-item active">
+            <a class="nav-link" href="{{route('dashboard')}}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+    @endif
 
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
@@ -45,17 +43,27 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url('/pengunjung')}}">
-            <i class="fas fa-user"></i>
-            Pengunjung
-        </a>
-    </li>
-
+    @if (Auth::user()->role === 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('pengunjung.index') }}">
+                <i class="fas fa-users"></i>
+                <span>Pengunjung</span>
+            </a>
+        </li>
+    @endif
+    
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{url('/tiket')}}">
             <i class="fas fa-ticket-alt"></i>
             Tiket
         </a>
     </li>
+    @if (Auth::user()->role === 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('user.index') }}">
+                <i class="fas fa-user"></i>
+                <span>User</span>
+            </a>
+        </li>
+    @endif
 </ul>

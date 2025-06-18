@@ -14,7 +14,7 @@
         <div class="card-body">
           <h4 class="card-title">Form Film</h4>
 
-          <form class="forms-sample" action="{{ route('simpanfilm') }}" method="POST">
+          <form class="forms-sample" action="{{ route('film.store') }}" method="POST">
             @csrf
             <div class="form-group">
               <label for="title">Judul Film</label>

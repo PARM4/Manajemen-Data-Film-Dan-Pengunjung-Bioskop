@@ -6,27 +6,23 @@
 @section('content')
 <div class="content-wrapper">
 
-
-
   <div class="row">
     <div class="col-12 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Form Jadwal</h4>
 
-          <form class="forms-sample" action="{{ route('simpanjadwal') }}" method="POST">
+          <form class="forms-sample" action="{{ route('jadwal.store') }}" method="POST">
             @csrf
-
             <div class="form-group">
               <label for="id_film">Film</label>
               <select name="id_film" id="id_film" class="form-control" required>
-                <option value="">Film</option>
+                <option value="">Pilih Film</option>
                 @foreach ($film as $item)
-                <option value="{{$item -> id}}">{{$item -> title}}</option>
+                  <option value="{{$item -> id}}">{{$item -> title}}</option>
                 @endforeach
               </select>
             </div>
-
             <div class="form-group">
               <label for="ruangan">Ruangan</label>
               <input type="text" class="form-control" id="ruangan" placeholder="Ruangan" name="ruangan" required>
@@ -44,6 +40,5 @@
       </div>
     </div>
   </div>
-
 </div>
 @endsection

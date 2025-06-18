@@ -10,7 +10,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Form Edit Data Film</h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('updatefilm', $film->id) }}" method="POST">
+            <form action="{{ route('film.update', $film->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="{{ route('film') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ route('film.index') }}" class="btn btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
