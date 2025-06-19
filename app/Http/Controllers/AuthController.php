@@ -6,6 +6,7 @@ use App\Models\pengunjungs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -40,43 +41,52 @@ class AuthController extends Controller
     }
     public function register(Request $request)
     {
-        if (User::where('email', $request->email)->exists()) {
-            return back()->with('error', 'Email sudah digunakan.');
-        }
 
         $request->validate([
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'role' => 'required',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role'=>$request->role
-        ]);
+        DB::beginTransaction();
 
-        // Jika role-nya pengunjung, tambahkan ke tabel pengunjungs
-        if ($user->role == 'pengunjung') {
-            pengunjungs::create([
-                'user_id' => $user->id,
-                'nama' => $request->name,
+        try {
+            // Simpan ke tabel users
+            $user = User::create([
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-
-
+                'role' => $request->role
             ]);
-        }
 
-        return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Silakan login.');
+            // Jika role adalah pengunjung, simpan juga ke tabel pengunjungs
+            if ($request->role === 'pengunjung') {
+                pengunjungs::create([
+                    'user_id' => $user->id,
+                    'nama' => $request->name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'status' => 'pending'
+                ]);
+            }
+
+            DB::commit();
+
+            return redirect()->route('login')->with('success', 'Akun berhasil dibuat. Tunggu konfirmasi admin.');
+        
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return back()->with('error', 'Gagal registrasi: ' . $e->getMessage());
+        }
     }
 
     public function Logout(Request $request){
         Auth::logout();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
         return redirect('login');
     }
 

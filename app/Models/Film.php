@@ -15,4 +15,8 @@ class Film extends Model
     {
         return $this->hasMany(Jadwal::class, 'id_film');
     }
+    public function pengunjung()
+    {
+        return $this->belongsToMany(pengunjungs::class, 'film_pengunjung');
+    }
 }

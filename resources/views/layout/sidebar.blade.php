@@ -43,7 +43,8 @@
         </a>
     </li>
 
-    @if (Auth::user()->role === 'admin')
+    @if (in_array(Auth::user()->role, ['admin', 'staf']))
+
         <li class="nav-item">
             <a class="nav-link" href="{{ route('pengunjung.index') }}">
                 <i class="fas fa-users"></i>
@@ -58,7 +59,7 @@
             Tiket
         </a>
     </li>
-    @if (Auth::user()->role === 'admin')
+    @if (in_array(Auth::user()->role, ['admin', 'staf']))
         <li class="nav-item">
             <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-user"></i>

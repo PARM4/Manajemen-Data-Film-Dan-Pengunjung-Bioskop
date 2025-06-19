@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('status', ['pending', 'approved'])->default('pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -50,6 +51,18 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->enum('role', ['admin', 'staf', 'pengunjung'])->after('password');
         });
+
+        Schema::create('film_pengunjung', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('film_id');
+            $table->unsignedBigInteger('pengunjung_id');
+            $table->timestamps();
+
+            $table->foreign('film_id')->references('id')->on('films')->onDelete('cascade');
+            $table->foreign('pengunjung_id')->references('id')->on('pengunjungs')->onDelete('cascade');
+
+            $table->unique(['film_id', 'pengunjung_id']);
+        });
     }
 
     /**
@@ -61,5 +74,6 @@ return new class extends Migration
         Schema::dropIfExists('pengunjungs');
         Schema::dropIfExists('jadwals');
         Schema::dropIfExists('tikets');
+        Schema::dropIfExists('film_pengunjung');
     }
 };
